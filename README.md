@@ -45,13 +45,17 @@ Les blocs résiduels aident le modèle à mieux apprendre en permettant à l'inf
 Le modèle PixelCNN est construit autour de plusieurs couches de convolutions masquées, combinées à des blocs résiduels pour permettre une meilleure propagation de l'information à travers le réseau. Les convolutions masquées sont essentielles car elles garantissent que chaque pixel ne dépend que des pixels précédents (ceux qui sont au-dessus et à gauche de lui), respectant ainsi la dépendance autoregressive nécessaire pour générer une image pixel par pixel. Les blocs résiduels, quant à eux, ajoutent des skip connections qui permettent de maintenir une version directe de l'information tout au long des couches profondes du modèle. Cela améliore la stabilité de l'entraînement et accélère la convergence. À la fin de l'architecture, une série de couches de convolutions permet de prédire la distribution de probabilité pour chaque pixel, ce qui permet au modèle de déterminer l'intensité de chaque pixel dans l'image générée. Le modèle est conçu pour générer des images avec une grande fidélité en apprenant progressivement la relation complexe entre les pixels.
 
 4. Entraînement du Modèle
+
 L'entraînement du modèle PixelCNN se fait en minimisant la perte de cross-entropie entre les prédictions de distribution des pixels et les valeurs réelles des pixels dans les images. À chaque itération, l'entrée est un lot d'images, et le modèle prédit la distribution de probabilité pour chaque pixel. Le critère de loss utilisé est la cross-entropie, qui compare les prédictions du modèle avec les classes réelles (les intensités des pixels). L'optimiseur Adam est couramment utilisé pour mettre à jour les poids du modèle, en ajustant les paramètres pour minimiser cette perte. L'entraînement est effectué sur plusieurs epochs pour permettre au modèle de bien apprendre les relations entre les pixels, ce qui est crucial pour générer des images réalistes. Au fur et à mesure de l'entraînement, la performance du modèle s'améliore, et les prédictions deviennent plus précises.
 
 5. Génération d'images
+
 Une fois le modèle PixelCNN entraîné, il peut générer des images de manière autoregressive. Le processus commence par une image vide, puis chaque pixel est généré un à un, de haut en bas et de gauche à droite, en fonction des pixels précédents. Pour chaque pixel, le modèle calcule la probabilité de chaque intensité possible et sélectionne un pixel en fonction de cette distribution. Le paramètre de température contrôle la diversité des images générées, avec une température basse rendant l'image plus précise et une température haute augmentant la diversité.
 
 6. Visualisation des Images Générées
+
 Les images générées peuvent être visualisées pour évaluer leur qualité. En utilisant des bibliothèques comme Matplotlib, les images sont affichées sous forme de grilles, permettant de juger de la performance du modèle, de la diversité et de la qualité des images produites.
 
 7. Conclusion
+
 PixelCNN est une approche puissante pour générer des images pixel par pixel, en apprenant les relations conditionnelles entre les pixels voisins. Grâce aux convolutions masquées et aux blocs résiduels, il génère des images réalistes tout en maintenant une architecture stable. Il offre des applications intéressantes dans la génération d'images et la compréhension des distributions visuelles.
